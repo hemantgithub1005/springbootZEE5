@@ -4,9 +4,14 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import com.zee.zee5app.dto.EROLE;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 
 @Entity
 @Table(name="login")
@@ -15,7 +20,7 @@ public class Login {
 	private String userName;
 	private String password;
 	private String regId;
-	private ROLE role;
+	
 	
 //	public Login(String userName, String password, String regId, ROLE role) {
 //		super();

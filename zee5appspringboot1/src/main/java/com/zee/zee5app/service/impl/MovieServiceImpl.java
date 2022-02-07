@@ -28,18 +28,19 @@ public class MovieServiceImpl implements MovieService {
 	@Autowired
 	private MovieRepository repository ;
 	
+	
 //    public MovieServiceImpl() throws IOException{
 //		
 //	}
 
 	@Override
-	public String addMovie(Movie movie) {
+	public Movie addMovie(Movie movie) {
 		// TODO Auto-generated method stub
 		Movie movie2 = repository.save(movie);
 		if (movie2 != null) {
-			return "record added in movie";
+			return null;
 		} else {
-			return "fail";
+			return null;
 		}
 	}
 

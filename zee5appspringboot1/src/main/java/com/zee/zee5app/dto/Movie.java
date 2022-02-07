@@ -7,6 +7,7 @@ import javax.naming.NameNotFoundException;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Max;
@@ -43,14 +44,20 @@ public class Movie implements Comparable<Movie>{
 	private String id;
 	
 	@NotBlank
-	private String moviename;
+	private String movieName;
+	
 	@NotBlank
-	private String Cast;
+	private String cast;
+	
+	
+	
 	private int length;
 	@NotNull
 	private String releaseDate;
-	//@NotBlank
-	private String trailer;
+	
+	
+	
+	
 	@NotBlank
 	private String language;
 	@Max(value = 70)
@@ -58,6 +65,8 @@ public class Movie implements Comparable<Movie>{
 	@NotBlank
 	private String genre;
 	
+	@Lob //large object binary any image,video content
+	private byte[] trailer;
 	
 	
 	

@@ -1,15 +1,29 @@
 package com.zee.zee5app.dto;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.hibernate.annotations.ManyToAny;
 import org.hibernate.validator.constraints.Length;
 
 import com.zee.zee5app.exception.InvalidEmailException;
@@ -30,15 +44,12 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 
 //write @Data and then press ctrl+space then enter to get the lombok
-@Setter
-@Getter
-@AllArgsConstructor
-@NoArgsConstructor
-
+@Data
 //we use this method to override instead of other one used below coz when we change anything later, it can handle on its own
 @EqualsAndHashCode
 @ToString
-
+@AllArgsConstructor
+@NoArgsConstructor
 //ORM mapping purpose
 @Entity //entity class is used for ORM - from javax
 //to customize table name
@@ -52,11 +63,11 @@ public class Register implements Comparable<Register>{
 	private String id;
 	
 	@Size(max=50)
-	@NotBlank
+	@NotNull
 	private String firstName;
 	
 	@Size(max=50)
-	@NotBlank
+	@NotNull
 	private String lastName;
 	
 	@Size(max=50)
@@ -64,11 +75,11 @@ public class Register implements Comparable<Register>{
 	private String email;
 	
 	@Size(max=100)
-	@NotBlank
+
 	private String password;
 	
-	
-	private BigDecimal contactnumber;
+
+	private BigDecimal contactNumber;
 
 	@Override
 	public int compareTo(Register o) {
@@ -79,5 +90,13 @@ public class Register implements Comparable<Register>{
 		//descending order
 		//return o.id.compareTo(this.getId())
 	}
+	@ManyToMany
+	@JoinTable(name="User_roles",joinColumns = @JoinColumn(name="regId"),
+	inverseJoinColumns=@JoinColumn(name="roleId"))
+	
+	private Set<Role> roles = new HashSet<>();
+	
+//	 @OneToOne(mappedBy="register",cascade=CascadeType.ALL)
+//	 private List<Subscription> episode=new ArrayList<>();
 
 }

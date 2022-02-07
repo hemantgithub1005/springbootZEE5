@@ -1,43 +1,51 @@
 package com.zee.zee5app.dto;
 
+import java.util.List;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Optional;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import com.zee.zee5app.dto.Episodes;
 
 import org.hibernate.validator.constraints.Length;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@Setter
-@Getter
-@EqualsAndHashCode
-@ToString
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
 
 @Entity
 @Table(uniqueConstraints = {@UniqueConstraint(columnNames = "seriesname")}, name = "series")
-public class Series implements Comparable<Series> {
+public class Series  {
 	
 	@Id
-	@Column(name = "id")
+	@Column(name = "seriesid")
 	@Length(min = 6)
 	private String id;
 	
     @NotBlank
  
-	private String seriesname;
+	private String seriesName;
     @NotBlank
 	private String Cast;
 	@NotNull
@@ -59,12 +67,13 @@ public class Series implements Comparable<Series> {
 	
 
 
-	@Override
-	public int compareTo(Series o) {
-		// TODO Auto-generated method stub
-		return this.id.compareTo(o.getId());
-	}
-
-
 	
+	
+	
+	
+    @OneToMany(mappedBy="series",cascade=CascadeType.ALL)
+    
+	private List<Episodes> episode=new ArrayList<>();
+		
+     
 }
