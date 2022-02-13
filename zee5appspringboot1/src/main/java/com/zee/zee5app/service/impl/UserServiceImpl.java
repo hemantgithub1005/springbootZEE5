@@ -58,7 +58,7 @@ public class UserServiceImpl implements UserService {
 	public User addUser(User register) throws AlreadyExistsException {
 		// TODO Auto-generated method stub
 		//make exception for the next line
-		if(repository.existsByEmailAndContactNumber(register.getEmail(), register.getContactNumber()) == true) {
+		if(repository.existsByEmail(register.getEmail()) == true) {
 			throw new AlreadyExistsException("already exists");
 		}
 		User register2 = repository.save(register);

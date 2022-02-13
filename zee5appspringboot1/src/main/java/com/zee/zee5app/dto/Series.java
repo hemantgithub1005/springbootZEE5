@@ -1,9 +1,7 @@
 package com.zee.zee5app.dto;
 
-import java.util.List;
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Optional;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -16,65 +14,53 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import com.zee.zee5app.dto.Episodes;
 
-import org.hibernate.validator.constraints.Length;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @Setter
-
+@EqualsAndHashCode
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
-@Table(uniqueConstraints = {@UniqueConstraint(columnNames = "seriesname")}, name = "series")
-public class Series  {
+@Table(name = "series", uniqueConstraints = {@UniqueConstraint(columnNames = "name")})
+public class Series implements Comparable<Series> {
 	
 	@Id
-	@Column(name = "seriesid")
-	@Length(min = 6)
+	@Column(name = "serId")
 	private String id;
-	
-    @NotBlank
- 
-	private String seriesName;
-    @NotBlank
-	private String Cast;
-	
-    @NotNull
-	private String releaseDate;
-	//@NotBlank
+	@NotBlank
+	private String name;
+	@Max(value = 70)
+	private int ageLimit;
 	private String trailer;
 	@NotBlank
-	private String language;
-	
-	@Max(value = 70)
-	private String ageLimit;
-	
+	private String cast;
 	@NotBlank
 	private String genre;
-
+	@NotNull
+	private String releaseDate;
+	@NotBlank
+	private String language;
 	@Min(value = 1)
-	private int noofepisodes;
+	private int noOfEpisodes;
 	
+	@JsonIgnore
+	@OneToMany(mappedBy = "series", cascade = CascadeType.ALL)
+	private List<Episodes> episodes = new ArrayList<Episodes>();
 	
+	@Override
+	public int compareTo(Series o) {
+		// TODO Auto-generated method stub
+		return this.id.compareTo(o.getId());
+	}
 
-
-	
-	
-	
-	
-    @OneToMany(mappedBy="series",cascade=CascadeType.ALL)
-    
-	private List<Episodes> episode=new ArrayList<>();
-		
-     
 }

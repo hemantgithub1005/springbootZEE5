@@ -1,6 +1,5 @@
 package com.zee.zee5app.controller;
 
-
 import java.util.List;
 
 import javax.validation.Valid;
@@ -15,46 +14,46 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.zee.zee5app.dto.Movie;
+import com.zee.zee5app.dto.Series;
 import com.zee.zee5app.payload.response.MessageResponse;
-import com.zee.zee5app.repository.MovieRepository;
+import com.zee.zee5app.repository.SeriesRepository;
 
 @RestController
-@RequestMapping("/api/movie")
-public class MovieController {
+@RequestMapping("/api/series")
+public class SeriesController {
 	
 	@Autowired
-	private MovieRepository movieRepository;
+	private SeriesRepository seriesRepository;
 	
-	@PostMapping("/addMovie")
+	@PostMapping("/addSeries")
 	@PreAuthorize("hasRole('ADMIN')")
-	public ResponseEntity<?> addMovie(@Valid @RequestBody Movie movie) {
-		if (movieRepository.existsById(movie.getId())) {
+	public ResponseEntity<?> addSeries(@Valid @RequestBody Series series) {
+		if (seriesRepository.existsById(series.getId())) {
 			return ResponseEntity
 					.badRequest()
-					.body(new MessageResponse("Error: Movie id already exists"));
+					.body(new MessageResponse("Error: Series Id already exists!"));
 		}
-		if (movieRepository.existsByMovieName(movie.getMovieName())) {
+		if (seriesRepository.existsByName(series.getName())) {
 			return ResponseEntity
 					.badRequest()
-					.body(new MessageResponse("Error: Movie already exists"));
+					.body(new MessageResponse("Error: Series name already taken!"));
 		}
-		movieRepository.save(movie);
+		seriesRepository.save(series);
 		return ResponseEntity
 				.status(201)
-				.body(new MessageResponse("Movie inserted successfully"));
+				.body(new MessageResponse("Series inserted successfully"));
 	}
 	
 	@GetMapping("/all")
 	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
-	public ResponseEntity<?> getAllMovies() {
-		List<Movie> movies = movieRepository.findAll();
-		if (movies.isEmpty()) {
+	public ResponseEntity<?> getAllSeries() {
+		List<Series> series = seriesRepository.findAll();
+		if(series.isEmpty()) {
 			return ResponseEntity
 					.status(HttpStatus.NO_CONTENT)
 					.body(new MessageResponse("No record found"));
 		}
-		return ResponseEntity.ok(movies);
+		return ResponseEntity.ok(series);
 	}
 
 }

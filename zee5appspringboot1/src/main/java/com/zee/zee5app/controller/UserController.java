@@ -46,26 +46,30 @@ public class UserController {
 	@Autowired
 	private AuthenticationManager authenticationManager;
 	
-//	@PostMapping("/signin")
-//	public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
-//		Authentication authentication = authenticationManager
-//				.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(),
-//						loginRequest.getPassword()));
-//		
-//		SecurityContextHolder.getContext().setAuthentication(authentication);
-//		String jwt = jwtUtils.generateToken(authentication);
-//		UserDetailsImpl userDetailsImpl = (UserDetailsImpl) authentication.getPrincipal();
-//		List<String> roles = userDetailsImpl.getAuthorities()
-//				.stream()
-//				.map(i->i.getAuthority())
-//				.collect(Collectors.toList());
-//		
-//		return ResponseEntity.ok(new JwtResponse(jwt,userDetailsImpl.getid(),userDetailsImpl.getUsername(),userDetailsImpl.getemail(),roles));
-//	}
+	@PostMapping("/signin")
+	public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
+		Authentication authentication = authenticationManager
+				.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(),
+						loginRequest.getPassword()));
+		
+		SecurityContextHolder.getContext().setAuthentication(authentication);
+		String jwt = jwtUtils.generateToken(authentication);
+		UserDetailsImpl userDetailsImpl = (UserDetailsImpl) authentication.getPrincipal();
+		List<String> roles = userDetailsImpl.getAuthorities()
+				.stream()
+				.map(i->i.getAuthority())
+				.collect(Collectors.toList());
+		
+		return ResponseEntity.ok(new JwtResponse(jwt,
+				userDetailsImpl.getId(),
+				userDetailsImpl.getUsername(),
+				userDetailsImpl.getEmail(),
+				roles));
+	}
 	
 	@PostMapping("/signup")
 	public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signupRequest) {
-		if (userRepository.existsByUsername(signupRequest.getUserName())) {
+		if (userRepository.existsByUsername(signupRequest.getUsername())) {
 			return ResponseEntity
 					.badRequest()
 					.body(new MessageResponse("Error: Username is already taken!"));
@@ -76,7 +80,7 @@ public class UserController {
 					.body(new MessageResponse("Error: Email is already in use!"));
 		}
 		
-		User user = new User(signupRequest.getUserName(),
+		User user = new User(signupRequest.getUsername(),
 				signupRequest.getEmail(),
 				passwordEncoder.encode(signupRequest.getPassword()),
 				signupRequest.getFirstName(),

@@ -2,17 +2,15 @@ package com.zee.zee5app.dto;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
-import org.hibernate.annotations.ManyToAny;
-import org.hibernate.validator.constraints.Length;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -25,32 +23,32 @@ import lombok.ToString;
 @Getter
 @EqualsAndHashCode
 @ToString
-@AllArgsConstructor
 @NoArgsConstructor
-
+@AllArgsConstructor
 @Entity
-@Table(uniqueConstraints = {@UniqueConstraint(columnNames = "episodename")}, name = "episodes")
-public class Episodes implements Comparable<Movie> {
+@Table(name = "episodes")
+public class Episodes implements Comparable<Episodes> {
 	
 	@Id
-	@Column(name = "episodesid")
-	@Length(min = 6)
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "epiId")
 	private String id;
-	
 	@NotBlank
-	private String episodename;
+	private String name;
+	@NotNull
+	private float length;
+	@NotBlank
+	private String location;
+	private String trailer;
 	
-	private int length;
-	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+	@JoinColumn(name = "serId")
+	private Series series;
 	
 	@Override
-	public int compareTo(Movie o) {
+	public int compareTo(Episodes o) {
 		// TODO Auto-generated method stub
-		return this.id.compareTo(o.getId());
+		return o.id.compareTo(this.getId());
 	}
-	
-	@ManyToOne
-	@JoinColumn(name="seriesid")//fk
-    private Series series; //take series id and act as fk
+
 }
