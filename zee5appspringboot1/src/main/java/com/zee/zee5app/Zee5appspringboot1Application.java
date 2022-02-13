@@ -14,7 +14,7 @@ import org.springframework.context.support.AbstractApplicationContext;
 
 import com.zee.zee5app.dto.Episodes;
 import com.zee.zee5app.dto.Movie;
-import com.zee.zee5app.dto.Register;
+import com.zee.zee5app.dto.User;
 import com.zee.zee5app.dto.Series;
 import com.zee.zee5app.dto.Subscription;
 import com.zee.zee5app.exception.AlreadyExistsException;
@@ -44,8 +44,8 @@ public class Zee5appspringboot1Application {
 		UserService service = applicationContext.getBean(UserService.class);
 		LoginService loginService=applicationContext.getBean(LoginService.class);
 		
-		Register register;
-		register = new Register("ZEE00008", "HEMANT", "YADAV", "HEMANT.YADAV@gmail.com", "123456789", null, null);
+		User register;
+		register = new User("ZEE00008", "HEMANT", "YADAV", "HEMANT.YADAV@gmail.com", "123456789", null, null);
 		register.setContactNumber(new BigDecimal("8168684339"));
 		try {
 			try {
@@ -59,7 +59,7 @@ public class Zee5appspringboot1Application {
 			e1.printStackTrace();
 		}
 		
-		register = new Register("ZEE00009", "HEMANT01", "YADAV01", "HEMANT1.YADAV01@gmail.com", "12345678901", null, null);
+		register = new User("ZEE00009", "HEMANT01", "YADAV01", "HEMANT1.YADAV01@gmail.com", "12345678901", null, null);
 		register.setContactNumber(new BigDecimal("8168685338"));
 		try {
 			try {
@@ -73,7 +73,7 @@ public class Zee5appspringboot1Application {
 			e1.printStackTrace();
 		}
 		
-		register = new Register("ZEE000078", "HEMANT03", "YADAV03", "HEMANT21.YADAV03@gmail.com", "12345678903", null, null);
+		register = new User("ZEE000078", "HEMANT03", "YADAV03", "HEMANT21.YADAV03@gmail.com", "12345678903", null, null);
 		register.setContactNumber(new BigDecimal("8168684110"));
 		try {
 			try {
@@ -87,7 +87,7 @@ public class Zee5appspringboot1Application {
 			e1.printStackTrace();
 		}
 
-		Optional<Register> register1 = null;
+		Optional<User> register1 = null;
 
 		try {
 			register1 = service.getUserById("ZEE00008");
@@ -104,7 +104,7 @@ public class Zee5appspringboot1Application {
 		}
 		
 
-		Optional<List<Register>> optional1;
+		Optional<List<User>> optional1;
 		try {
 			optional1 = service.getAllUserDetails();
 			if (optional1.isEmpty()) {
@@ -128,7 +128,7 @@ public class Zee5appspringboot1Application {
 		}
 
 		try {
-			for (Register register2 : service.getAllUsers()) {
+			for (User register2 : service.getAllUsers()) {
 				if (register2 != null)
 					System.out.println(register2);
 			}

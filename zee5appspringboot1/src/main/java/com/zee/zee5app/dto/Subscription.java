@@ -64,4 +64,7 @@ public class Subscription implements Comparable<Subscription>{
 		// TODO Auto-generated method stub
 		return this.id.compareTo(o.getId());
 	}
+    @OneToOne
+	@JoinColumn(name = "regId")
+	private User register;
 }

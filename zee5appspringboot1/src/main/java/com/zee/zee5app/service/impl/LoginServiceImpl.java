@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import com.zee.zee5app.dto.EROLE;
 import com.zee.zee5app.dto.Login;
 
-import com.zee.zee5app.dto.Register;
+import com.zee.zee5app.dto.User;
 import com.zee.zee5app.exception.IdNotFoundException;
 import com.zee.zee5app.exception.InvalidEmailException;
 import com.zee.zee5app.exception.InvalidIdLengthException;

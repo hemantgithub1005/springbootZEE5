@@ -52,6 +52,7 @@ public class Movie implements Comparable<Movie>{
 	
 	
 	private int length;
+	
 	@NotNull
 	private String releaseDate;
 	

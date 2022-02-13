@@ -18,7 +18,7 @@ import com.zee.zee5app.dto.EROLE;
 import com.zee.zee5app.dto.Episodes;
 import com.zee.zee5app.dto.Movie;
 //
-import com.zee.zee5app.dto.Register;
+import com.zee.zee5app.dto.User;
 import com.zee.zee5app.dto.Role;
 import com.zee.zee5app.dto.Series;
 import com.zee.zee5app.exception.AlreadyExistsException;
@@ -31,6 +31,7 @@ import com.zee.zee5app.service.MovieService;
 import com.zee.zee5app.service.RoleService;
 import com.zee.zee5app.service.SeriesService;
 import com.zee.zee5app.service.UserService;
+import com.zee.zee5app.aop.*;
 //
 public class Main2 {
 

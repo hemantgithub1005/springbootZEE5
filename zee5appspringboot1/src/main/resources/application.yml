@@ -1,4 +1,7 @@
 spring:
+  jackson:
+     serialization:
+        fail-on-empty-beans: false
   datasource:
     url: jdbc:mysql://localhost:3306/zee5appjpa
     username: root
@@ -14,9 +17,11 @@ spring:
       naming:
         physical-strategy: com.zee.zee5app.utils.CustomNamingStrategy
       ddl-auto: update
-
 server:
-  port: 0
+  port: 9006
   servlet:
     context-path: /api
-        
+zee5app:
+  app:
+    jwtSecret: secretKey
+    jwtExpirationMs: 86400000

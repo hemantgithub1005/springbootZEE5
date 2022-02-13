@@ -48,7 +48,8 @@ public class Series  {
 	private String seriesName;
     @NotBlank
 	private String Cast;
-	@NotNull
+	
+    @NotNull
 	private String releaseDate;
 	//@NotBlank
 	private String trailer;
